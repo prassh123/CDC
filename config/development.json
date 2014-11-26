@@ -1,0 +1,11 @@
+{
+  "server": {
+    "https": false,
+    "host": "localhost",
+    "port": "9090"
+  },
+  "app": {
+    "version": "0.0.1",
+    "name": "cdc"
+  }
+}

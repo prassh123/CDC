@@ -1,0 +1,11 @@
+	Rank	All Races Site	All Races Rate	White Site	White Rate	Black Site	Black Rate	Asian/Pacific Islander Site	Asian/Pacific Islander Rate	American Indian/Alaska Native Site	American Indian/Alaska Native Rate	Hispanic Site	Hispanic Rate
+	1	Prostate	128.3	Female Breast	122.8	Prostate	194.7	Female Breast	87.8	Female Breast	69.6	Prostate	104.4
+	2	Female Breast	122.0	Prostate	117.2	Female Breast	121.2	Prostate	67.1	Prostate	62.2	Female Breast	92.1
+	3	Lung and Bronchus	61.0	Lung and Bronchus	61.7	Lung and Bronchus	64.0	Lung and Bronchus	34.7	Lung and Bronchus	42.5	Colon and Rectum	35.4
+	4	Colon and Rectum	39.9	Colon and Rectum	38.9	Colon and Rectum	46.7	Colon and Rectum	32.4	Colon and Rectum	29.1	Lung and Bronchus	32.2
+	5	Corpus and Uterus, NOS	25.4	Corpus and Uterus, NOS	25.7	Corpus and Uterus, NOS	24.6	Corpus and Uterus, NOS	17.3	Kidney and Renal Pelvis	15.0	Corpus and Uterus, NOS	21.8
+	6	Urinary Bladder	20.2	Melanomas of the Skin	22.1	Kidney and Renal Pelvis	17.1	Thyroid	14.0	Corpus and Uterus, NOS	14.7	Non-Hodgkin Lymphoma	16.7
+	7	Melanomas of the Skin	19.7	Urinary Bladder	21.4	Pancreas	15.2	Liver and Intrahepatic Bile Duct	13.0	Non-Hodgkin Lymphoma	10.3	Kidney and Renal Pelvis	15.5
+	8	Non-Hodgkin Lymphoma	18.6	Non-Hodgkin Lymphoma	19.1	Non-Hodgkin Lymphoma	13.4	Non-Hodgkin Lymphoma	13.0	Liver and Intrahepatic Bile Duct	9.5	Liver and Intrahepatic Bile Duct	12.6
+	9	Kidney and Renal Pelvis	15.6	Kidney and Renal Pelvis	15.7	Myeloma	11.8	Stomach	10.3	Urinary Bladder	8.4	Thyroid	12.2
+	10	Thyroid	13.8	Thyroid	14.4	Urinary Bladder	11.4	Pancreas	9.1	Ovary	7.9	Pancreas	11.1

@@ -1,0 +1,13 @@
+{
+  "curly"         : true,
+  "indent"        : 4,
+  "latedef"       : false,
+  "quotmark"      : "single",
+  "noempty"       : true,
+  "unused"        : true,
+  "maxlen"        : 80,
+  "debug"         : false,
+  "evil"          : false,
+  "mocha"         : true,
+  "node"          : true
+}
