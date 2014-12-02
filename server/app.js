@@ -26,6 +26,7 @@ var server = restify.createServer({
 
 
 server.use(restify.queryParser());
+server.use(restify.CORS());
 routes.apply(server);
 
 server.listen(config.server.port, function() {

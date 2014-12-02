@@ -27,10 +27,21 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'restart'],
+      files: ['<%= jshint.files %>', 'client/css/**/*.scss'],
+      tasks: ['jshint', 'sass', 'restart'],
       options: {
         spawn: false
+      }
+    },
+    sass: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'client/css',
+          src: ['*.scss'],
+          dest: 'client/css',
+          ext: '.css'
+        }]
       }
     },
 
@@ -49,6 +60,7 @@ module.exports = function (grunt) {
   // Load the plugins that provides the tasks.
   grunt.loadNpmTasks('grunt-execute');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell-spawn');
@@ -56,7 +68,7 @@ module.exports = function (grunt) {
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'mochaTest']);
   grunt.registerTask('precheck', ['jshint']);
-  grunt.registerTask('server', ['jshint', 'mochaTest', 'shell:startserver', 'watch']);
+  grunt.registerTask('server', ['jshint', 'sass', 'mochaTest', 'shell:startserver', 'watch']);
   grunt.registerTask('restart', ['shell:startserver:kill', 'shell:startserver']);
 
 };
