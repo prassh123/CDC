@@ -1,0 +1,75 @@
+<html ng-app="cdcApp">
+<head>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/highcharts-release/highcharts.js"></script>
+    <script src="../bower_components/lodash/dist/lodash.min.js"></script>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+
+    <link rel="stylesheet" href="./css/cdc.css">
+
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/highcharts-ng/dist/highcharts-ng.min.js"></script>
+    <script src="js/controllers.js"></script>
+
+</head>
+
+
+<body ng-controller="CDCController">
+
+    <header>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Centre for Disease Control and Prevention</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="body-container">
+        <div class="dropdown cdc-chart-type">
+            <button class="btn btn-default dropdown-toggle" type="button" id="cdcChartType" data-toggle="dropdown" aria-expanded="true">
+                Chart type
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="cdcChartType">
+                <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bar</a></li>-->
+                <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Pie</a></li>-->
+                <li role="presentation" ng-repeat="chart in charts" ng-click="redrawChart(chart)"><a role="menuitem" tabindex="-1" href="#">{{chart.type}}</a></li>
+            </ul>
+        </div>
+
+        <!--<div id="chart-stats">{{chartInstance}}</div>-->
+        <highchart id="chart1" config="highchartsNG"></highchart>
+
+        <div id="chart-filter">
+            <div class="dropdown" ng-repeat="filter in filters" ng-class="filter.filterType">
+                <div class="dropdown-label" ng-class="filter.filterType">{{filter.label}}</div>
+
+                <select ng-if="filter.multiple==true" multiple
+                        ng-class="filter.filterType"
+                        ng-model="filter.selectedFilter"
+                        ng-selected="filter.selectedFilter"
+                        ng-options="option for option in filter.options"
+                        ng-init="invokeFn(filter)"
+                        ng-change="getResults(filter)">
+               </select>
+
+                <select ng-if="!filter.multiple"
+                        ng-class="filter.filterType"
+                        ng-model="filter.selectedFilter"
+                        ng-selected="filter.selectedFilter"
+                        ng-options="option for option in filter.options"
+                        ng-init="invokeFn(filter)"
+                        ng-change="getResults(filter)">
+                </select>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>

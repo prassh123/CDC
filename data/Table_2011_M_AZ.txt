@@ -1,0 +1,11 @@
+	Rank	All Races Site	All Races Rate	White Site	White Rate	Black Site	Black Rate	Asian/Pacific Islander Site	Asian/Pacific Islander Rate	American Indian/Alaska Native Site	American Indian/Alaska Native Rate	Hispanic Site	Hispanic Rate
+	1	Prostate	78.6	Prostate	77.2	Prostate	122.6	Lung and Bronchus	51.3	Prostate	54.7	Prostate	65.5
+	2	Lung and Bronchus	57.0	Lung and Bronchus	57.6	Lung and Bronchus	66.3	Prostate	42.1	Kidney and Renal Pelvis	35.3	Colon and Rectum	41.6
+	3	Colon and Rectum	38.8	Colon and Rectum	38.6	Colon and Rectum	39.5	Colon and Rectum	36.9	Liver and Intrahepatic Bile Duct	17.8	Lung and Bronchus	39.6
+	4	Urinary Bladder	33.6	Urinary Bladder	34.9	Liver and Intrahepatic Bile Duct	16.6	Liver and Intrahepatic Bile Duct	~	Colon and Rectum	16.3	Kidney and Renal Pelvis	20.4
+	5	Melanomas of the Skin	20.3	Melanomas of the Skin	21.5	Non-Hodgkin Lymphoma	16.4	Urinary Bladder	~	Lung and Bronchus	~	Liver and Intrahepatic Bile Duct	19.9
+	6	Non-Hodgkin Lymphoma	19.4	Non-Hodgkin Lymphoma	19.3	Kidney and Renal Pelvis	14.1	Stomach	~	Stomach	~	Urinary Bladder	17.1
+	7	Kidney and Renal Pelvis	19.2	Kidney and Renal Pelvis	18.8	Stomach	~	Thyroid	~	Oral Cavity and Pharynx	~	Non-Hodgkin Lymphoma	13.7
+	8	Leukemias	14.9	Leukemias	15.5	Thyroid	~	Non-Hodgkin Lymphoma	~	Pancreas	~	Leukemias	13.1
+	9	Oral Cavity and Pharynx	13.7	Oral Cavity and Pharynx	14.3	Oral Cavity and Pharynx	~	Kidney and Renal Pelvis	~	Non-Hodgkin Lymphoma	~	Pancreas	11.9
+	10	Pancreas	12.5	Pancreas	12.8	Testis	~	Larynx	~	Brain and Other Nervous System	~	Stomach	10.7

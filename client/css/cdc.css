@@ -1,0 +1,43 @@
+body .body-container {
+  margin: 0 auto;
+  width: 90%;
+  margin-top: 60px; }
+  body .body-container #chart1 {
+    float: left;
+    margin-right: 40px; }
+    body .body-container #chart1 .highcharts-container {
+      width: 800px;
+      border: 2px solid; }
+  body .body-container .cdc-chart-type {
+    margin-bottom: 5px; }
+  body .body-container #chart-filter {
+    clear: all;
+    background-color: lightskyblue;
+    float: left;
+    border-radius: 5px;
+    min-height: 400px;
+    width: 300px; }
+    body .body-container #chart-filter .dropdown {
+      margin: 5px;
+      padding: 2px;
+      height: 59px; }
+      body .body-container #chart-filter .dropdown.race {
+        height: 135px; }
+      body .body-container #chart-filter .dropdown .dropdown-label {
+        width: 78px;
+        float: left;
+        font-weight: bold; }
+      body .body-container #chart-filter .dropdown select {
+        width: 200px;
+        height: 35px;
+        overflow: hidden;
+        background: url(../images/down_arrow_select.jpg) no-repeat right #ddd;
+        border: 1px solid #ccc;
+        float: right; }
+      body .body-container #chart-filter .dropdown select.race {
+        height: 125px;
+        margin-bottom: 5px; }
+      body .body-container #chart-filter .dropdown > button {
+        width: 235px; }
+
+/*# sourceMappingURL=cdc.css.map */
