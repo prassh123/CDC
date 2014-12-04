@@ -12,8 +12,9 @@
 
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../bower_components/highcharts-ng/dist/highcharts-ng.min.js"></script>
-    <script src="js/controllers.js"></script>
 
+    <script src="js/controllers.js"></script>
+    <script src="js/UtilService.js"></script>
 </head>
 
 
@@ -36,8 +37,6 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="cdcChartType">
-                <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Bar</a></li>-->
-                <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Pie</a></li>-->
                 <li role="presentation" ng-repeat="chart in charts" ng-click="redrawChart(chart)"><a role="menuitem" tabindex="-1" href="#">{{chart.type}}</a></li>
             </ul>
         </div>
@@ -49,7 +48,7 @@
             <div class="dropdown" ng-repeat="filter in filters" ng-class="filter.filterType">
                 <div class="dropdown-label" ng-class="filter.filterType">{{filter.label}}</div>
 
-                <select ng-if="filter.multiple==true" multiple
+                <select ng-if="filter.multiple==true && filter.type=='select'" multiple
                         ng-class="filter.filterType"
                         ng-model="filter.selectedFilter"
                         ng-selected="filter.selectedFilter"
@@ -58,7 +57,7 @@
                         ng-change="getResults(filter)">
                </select>
 
-                <select ng-if="!filter.multiple"
+                <select ng-if="!filter.multiple && filter.type=='select'"
                         ng-class="filter.filterType"
                         ng-model="filter.selectedFilter"
                         ng-selected="filter.selectedFilter"
@@ -66,6 +65,12 @@
                         ng-init="invokeFn(filter)"
                         ng-change="getResults(filter)">
                 </select>
+
+                <input ng-if="filter.type=='text'"
+                       ng-model="filter.selectedOption"
+                       ng-maxlength="filter.maxlength"
+                       ngTrim="true">
+
             </div>
         </div>
     </div>

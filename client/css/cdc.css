@@ -1,3 +1,5 @@
+body header nav div.container {
+  margin-left: 58px; }
 body .body-container {
   margin: 0 auto;
   width: 90%;
@@ -6,13 +8,15 @@ body .body-container {
     float: left;
     margin-right: 40px; }
     body .body-container #chart1 .highcharts-container {
-      width: 800px;
+      width: 900px !important;
+      height: 470px !important;
       border: 2px solid; }
   body .body-container .cdc-chart-type {
     margin-bottom: 5px; }
   body .body-container #chart-filter {
     clear: all;
     background-color: lightskyblue;
+    position: relative;
     float: left;
     border-radius: 5px;
     min-height: 400px;
@@ -21,6 +25,12 @@ body .body-container {
       margin: 5px;
       padding: 2px;
       height: 59px; }
+      body .body-container #chart-filter .dropdown.rate_gt, body .body-container #chart-filter .dropdown.rate_lt {
+        width: 96px;
+        float: right;
+        top: -23px; }
+        body .body-container #chart-filter .dropdown.rate_gt:after, body .body-container #chart-filter .dropdown.rate_lt:after {
+          clear: both; }
       body .body-container #chart-filter .dropdown.race {
         height: 135px; }
       body .body-container #chart-filter .dropdown .dropdown-label {
@@ -31,12 +41,15 @@ body .body-container {
         width: 200px;
         height: 35px;
         overflow: hidden;
-        background: url(../images/down_arrow_select.jpg) no-repeat right #ddd;
         border: 1px solid #ccc;
         float: right; }
       body .body-container #chart-filter .dropdown select.race {
         height: 125px;
         margin-bottom: 5px; }
+      body .body-container #chart-filter .dropdownselect:after {
+        clear: both; }
+      body .body-container #chart-filter .dropdown input {
+        max-width: 50px; }
       body .body-container #chart-filter .dropdown > button {
         width: 235px; }
 

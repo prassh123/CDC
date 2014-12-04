@@ -1,4 +1,13 @@
 body {
+  header {
+    nav {
+      div{
+        &.container {
+          margin-left: 58px;
+        }
+      }
+    }
+  }
   .body-container {
     margin: 0 auto;
     width: 90%;
@@ -9,7 +18,8 @@ body {
       margin-right: 40px;
 
       .highcharts-container {
-        width: 800px;
+        width: 900px !important;
+        height: 470px !important;
         border: 2px solid;
       }
     }
@@ -21,6 +31,7 @@ body {
     #chart-filter {
       clear: all;
       background-color: lightskyblue;
+      position: relative;
       float: left;
       border-radius: 5px;
       min-height: 400px;
@@ -30,6 +41,17 @@ body {
         margin: 5px;
         padding: 2px;
         height: 59px;
+
+        &.rate_gt, &.rate_lt {
+          width: 96px;
+          float: right;
+          top: -23px;
+
+          &:after {
+            clear: both;
+          }
+        }
+
 
         &.race {
           height: 135px;
@@ -45,7 +67,7 @@ body {
           width: 200px;
           height: 35px;
           overflow: hidden;
-          background: url(../images/down_arrow_select.jpg) no-repeat right #ddd;
+          //background: url(../images/down_arrow_select.jpg) no-repeat right #ddd;
           border: 1px solid #ccc;
           float: right;
         }
@@ -53,6 +75,15 @@ body {
         select.race {
           height: 125px;
           margin-bottom: 5px;
+        }
+
+        &select:after {
+          clear: both;
+        }
+
+        input {
+          //float: right;
+          max-width: 50px;
         }
 
         > button {

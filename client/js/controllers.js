@@ -1,29 +1,38 @@
-var cdcApp = angular.module('cdcApp', ['highcharts-ng']);
+var cdcApp = angular.module('cdcApp', ['highcharts-ng'])
+  .constant('cdcConfig', {
+    'HOSTNAME': 'http://localhost:9090/'
+  });
 
-cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
+cdcApp.controller('CDCController', ['$scope', 'UtilService',
+  function($scope, UtilService) {
 
-  var hostname='http://localhost:9090';
   $scope.filters = [
     {
       filterType: 'year',
       label: 'Year',
+      type: 'select',
       options: '',
       selectedOption: '2011',
+      multiple: false,
       getData: function(filterObj) {
         console.log(filterObj);
-        $http.get(hostname + '/api/years').success(function(data) {
-          filterObj.options = data;
+
+        UtilService.ajaxCall('/api/years', '', function(data) {
+            filterObj.options = data;
         });
       }
     },
     {
       filterType: 'state',
       label: 'State',
+      type: 'select',
       options: '',
       selectedOption: 'ALL',
+      multiple: false,
       getData: function(filterObj) {
         console.log(filterObj);
-        $http.get(hostname + '/api/states').success(function(data) {
+
+        UtilService.ajaxCall('/api/states', '', function(data) {
           filterObj.options = data;
         });
       }
@@ -31,12 +40,13 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
     {
       filterType: 'gender',
       label: 'Gender',
+      type: 'select',
       options: '',
       selectedOption: 'M',
-
+      multiple: false,
       getData: function(filterObj) {
-      console.log(filterObj);
-        $http.get(hostname + '/api/gender').success(function(data) {
+        console.log(filterObj);
+        UtilService.ajaxCall('/api/gender', '', function(data) {
           filterObj.options = data;
         });
       }
@@ -44,27 +54,52 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
     {
       filterType: 'race',
       label: 'Race',
+      type: 'select',
       options: '',
       selectedOption: 'black',
       multiple: true,
 
       getData: function(filterObj) {
         console.log(filterObj);
-        $http.get(hostname + '/api/races').success(function(data) {
+        UtilService.ajaxCall('/api/races', '', function(data) {
           filterObj.options = data;
         });
       }
     },
     {
       filterType: 'site',
+      type: 'select',
       label: 'Cancer Site',
       options: '',
+      multiple: false,
       selectedOption: '',
       getData: function(filterObj) {
         console.log(filterObj);
-        $http.get(hostname + '/api/sites').success(function(data) {
+        UtilService.ajaxCall('/api/sites', '', function(data) {
           filterObj.options = data;
         });
+      }
+    },
+    {
+      filterType: 'rate_lt',
+      label: 'Rate <',
+      options: '',
+      selectedOption: '',
+      type: 'text',
+      maxlength: '3',
+      getData: function(filterObj) {
+        console.log(filterObj);
+      }
+    },
+    {
+      filterType: 'rate_gt',
+      label: 'Rate >',
+      options: '',
+      selectedOption: '',
+      type: 'text',
+      maxlength: '3',
+      getData: function(filterObj) {
+        console.log(filterObj);
       }
     }
 ];
@@ -72,62 +107,20 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
   $scope.charts = [
     {
       type: 'column',
-      width: 800,
-      height: 400
+      width: 900,
+      height: 470
     },
     {
       type: 'pie',
-      width: 800,
-      height: 400
+      width: 900,
+      height: 470
     },
     {
       type: 'line',
-      width: 800,
-      height: 400
+      width: 900,
+      height: 470
     }
   ];
-
-  function collectQueryParams(thisFilter) {
-    var queryParams = {};
-    queryParams[thisFilter.filterType] = thisFilter.selectedFilter;
-
-    _.filter($scope.filters, function(obj) {
-      queryParams[obj.filterType] = obj.selectedOption;
-    });
-
-    return queryParams;
-  }
-
-  function drawChart(obj) {
-    obj = obj || $scope.chartData;
-    if (_.isEmpty(obj)) {
-      return;
-    }
-
-    $scope.highchartsNG = {
-      options: {
-        chart: {
-          type: obj.chartType,
-          width: '800',
-          height: '400'
-        }
-      },
-      title: {
-        text: 'Top 10 Cancer Sites'
-      },
-      xAxis: {
-        categories: obj.categories
-      },
-      yAxis: {
-        title: {
-          text: 'Rates per 10000'
-        }
-      },
-      series: obj.seriesData,
-      loading: false
-    };
-  }
-
 
   /**
    * Start of Scope methods
@@ -139,26 +132,24 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
 
   /** Watch for changes in chartData and draw the graph */
   $scope.$watch('chartData', function() {
-    drawChart();
+    $scope.highchartsNG = UtilService.getChartConfig($scope.chartData);
   }, true);
+
 
   $scope.getResults = function(filter) {
     filter.selectedOption = filter.selectedFilter;
-    console.log('getting results for selected ', filter);
-    var queryParams = collectQueryParams(filter);
+    var queryParams = UtilService.collectQueryParams($scope.filters, filter);
 
-    $scope.ajaxCall('/api/stats',
+    UtilService.ajaxCall('/api/stats',
       queryParams, function(data) {
         //console.log('in callback ', data);
 
         var seriesData = [];
         var categoriesArray = [];
 
-
         var races = _.find($scope.filters, {filterType: 'race'}).selectedOption;
         if (typeof races == 'object') {
-          _.forEach(_.find($scope.filters,
-            {filterType: 'race'}).selectedOption, function(race) {
+          _.forEach(races, function(race) {
             var seriesObj = {};
             seriesObj.name = race.toLowerCase();
             seriesObj.data = [];
@@ -171,16 +162,13 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
           seriesData.push(seriesObj);
         }
 
-        console.log('seriesData ', seriesData);
-
-        console.log('data ', data);
+        //console.log('seriesData ', seriesData);
+        //console.log('data ', data);
 
         _.forEach(data, function(race) {
-
           _.forEach(race, function(value)  {
             console.log('race ', value);
             var found = _.find(seriesData, {name: value.race});
-            console.log('found ', found);
             if (typeof found != 'undefined') {
               found.data.push(value.rate);
             }
@@ -191,9 +179,11 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
           });
         });
 
-        console.log('categories data ', categoriesArray);
-        $scope.chartData =   {
-          chartType: 'column',
+        //console.log('categories data ', categoriesArray);
+        $scope.chartData = {
+          chartType: ($scope.chartData &&
+                        $scope.chartData.chartType)|| 'column',
+
           categories: _.keys(categoriesArray),
           seriesData: seriesData
         };
@@ -201,19 +191,8 @@ cdcApp.controller('CDCController', ['$scope', '$http', function($scope, $http) {
   };
 
   $scope.invokeFn = function(filter) {
-    console.log('filter', filter);
+    //console.log('filter', filter);
     (filter.getData).call(this, filter);
   };
-
-
-  $scope.ajaxCall = function(path, data, callback) {
-    var queryParams = $.param(data);
-    console.log('query params ', queryParams);
-    $http.get(hostname + path + '?' + queryParams).success(function(data) {
-      //console.log('angular ', data);
-      callback.call(this, data);
-    });
-  };
-
 
 }]);

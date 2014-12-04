@@ -1,13 +1,12 @@
 var _ = require('lodash'),
     $q = require('q'),
-    fs = require('fs'),
     utils = require('./utils');
-    //flatten = require('flat');
+
 
 var populateHashObj = function() {
   var hash = {};
   var deferred = $q.defer();
-  parseFile(hash).then(function(promises) {
+  utils.parseFile(hash).then(function(promises) {
     $q.all(promises).then(function() {
       deferred.resolve(hash);
     });
@@ -74,7 +73,7 @@ exports.getStats = function(req, res) {
   var rate_lt = (query.rate_lt) || null;
 
   var hash = {};
-  parseFile(hash).then(function(promises) {
+  utils.parseFile(hash).then(function(promises) {
 
     $q.all(promises).then(function() {
     if ((query.allstats)) {
@@ -96,13 +95,6 @@ exports.getStats = function(req, res) {
             _.forEach(race, function(value) {
               value = value.toLowerCase();
               console.log('race value', value);
-              //tmp.push({
-              //  race: value,
-              //  rank: data.rank,
-              //  site: data[value + '_site'],
-              //  rate: parseFloat(data[value + '_rate'])
-              //});
-
               tmp[value] = {
                 race: value,
                 rank: data.rank,
@@ -145,15 +137,15 @@ exports.getStats = function(req, res) {
         }
         /* end rank */
         console.log('after rank: ', tmp);
-
+        race[0] = race[0].toLowerCase();
         /** rate */
         if (!_.isEmpty(rate_lt)) {
-          if(parseFloat(rate_lt) < tmp.rate) {
+          if(parseFloat(rate_lt) < tmp[race[0]].rate) {
             return;
           }
         }
         if (!_.isEmpty(rate_gt)) {
-          if(parseFloat(rate_gt) > tmp.rate) {
+          if(parseFloat(rate_gt) > tmp[race[0]].rate) {
             console.log('returning ');
             return;
           }
@@ -162,88 +154,10 @@ exports.getStats = function(req, res) {
         console.log('after rate: ', tmp);
         filteredData.push(tmp);
       }
-      //return;
+
     });
     res.json(filteredData);
     });
   });
 };
 
-function parseFile(hash) {
-  var readFilePromises = [];
-  var deferred = $q.defer();
-
-  fs.readdir(__dirname + '/../../data',function(err,files){
-    if (err) {
-      console.log(err);
-      throw err;
-    }
-    files.forEach(function(file){
-      readFilePromises.push(readFile(file, hash));
-    });
-    deferred.resolve(readFilePromises);
-  });
-
-  return deferred.promise;
-}
-
-function readFile(file, hash) {
-  var filePromise = $q.defer();
-
-  //console.log('file name ', file);
-  var parts = file.split('_');
-  var year = parts[1];
-  var gender = parts[2];
-  var state = parts[3].split('.')[0];
-  var LineByLineReader = require('line-by-line'),
-    lr = new LineByLineReader(__dirname + '/../../data/' + file);
-
-  lr.on('error', function (err) {
-    console.log(err);
-    deferred.reject(err);
-  });
-
-  lr.on('line', function (line) {
-    // 'line' contains the current line
-    // without the trailing newline character.
-
-    var data = line.split('\t');
-    if (data.length > 1) {
-      data.shift(); // ignore first empty column
-
-      var obj = {
-        rank: cleanse(data.shift()),
-        all_site:    cleanse(data.shift()),
-        all_rate: cleanse(data.shift()),
-        white_site: cleanse(data.shift()),
-        white_rate: cleanse(data.shift()),
-        black_site:  cleanse(data.shift()),
-        black_rate: cleanse(data.shift()),
-        asian_site: cleanse(data.shift()),
-        asian_rate: cleanse(data.shift()),
-        american_site: cleanse(data.shift()),
-        american_rate: cleanse(data.shift()),
-        hispanic_site: cleanse(data.shift()),
-        hispanic_rate: cleanse(data.shift())
-      };
-
-      if (!_.isEmpty(obj)) {
-        hash[year] = hash[year] || {};
-        hash[year][gender] = hash[year][gender] || {};
-        hash[year][gender][state] = hash[year][gender][state] || [];
-        hash[year][gender][state][obj.rank] = obj;
-
-      }
-    }
-  });
-
-  lr.on('end', function() {
-    // check if all files are added and then resolve the promise
-    filePromise.resolve();
-  });
-  return filePromise.promise;
-}
-
-var cleanse = function(string) {
-  return string.replace(/"/g, '').trimLeft();
-};
