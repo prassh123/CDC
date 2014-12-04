@@ -16,9 +16,6 @@
     "blanket": {
       "pattern": "index.js",
       "data-cover-never": "node_modules"
-    },
-    "travis-cov": {
-      "threshold": 100
     }
   },
   "repository": {
@@ -29,7 +26,7 @@
   "bugs": {
     "url": ""
   },
-  "homepage": "https://github.com/hightail/media-service",
+  "homepage": "https://github.com/prassh123/CDC",
   "devDependencies": {
     "blanket": "1.1.6",
     "bower": "^1.3.12",
@@ -42,21 +39,15 @@
     "grunt-mocha-test": "^0.12.2",
     "grunt-shell-spawn": "^0.3.0",
     "json-nice": "^1.0.1",
-    "mocha": "1.21.4",
-    "travis-cov": "0.2.5",
-    "unit.js": "^1.0.2"
+    "mocha": "1.21.4"
   },
   "dependencies": {
     "bunyan": "^1.2.3",
     "flat": "^1.3.0",
     "fs": "0.0.2",
-    "handlebars": "2.0.0",
     "line-by-line": "^0.1.3",
     "lodash": "2.4.1",
-    "md5": "^1.0.0",
-    "mime": "^1.2.11",
     "q": "1.0.1",
-    "redis": "0.12.1",
     "restify": "^2.8.3"
   }
 }
